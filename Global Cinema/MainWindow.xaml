@@ -1,0 +1,126 @@
+﻿<Window x:Class="Global_Cinema.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Global_Cinema"
+        xmlns:wpfAddBrowser="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        mc:Ignorable="d"
+        Title="Global Cinema" MinHeight="900" MinWidth="800" MaxHeight="900" MaxWidth="1600" WindowStyle="ToolWindow" Icon="Logo1.png" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+
+                <GradientStop Color="#FE27D6D6" Offset="0.04"/>
+                <GradientStop Color="#FEFF0000" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Row="1" x:Name="listbox1" ItemsSource="{Binding MoviesList}" MinHeight="500" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="listbox1_SelectionChanged" >
+
+            <ListBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+
+                    <GradientStop Color="#FEFF0000" Offset="0.04"/>
+                    <GradientStop Color="#FE27D6D6" Offset="1"/>
+                </LinearGradientBrush>
+            </ListBox.Background>
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate x:Name="it">
+
+                    <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalAlignment="Center" >
+
+
+                    </WrapPanel>
+
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" x:Name="border1" Width="200" Height="250" Background="White" BorderBrush="#FF25BFBF" BorderThickness="5" Margin="5,25,5,5">
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10*"></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" >
+                                    <Image Width="150" Height="150" Margin="0,8,0,0"  Source="{Binding Poster}"></Image>
+                                    <Label Width="250" Height="5" Background="#FF25BFBF" Margin="0,4,0,0"></Label>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" >
+                                    <TextBlock x:Name="CinemaListTitleTxT" Text="{Binding Path=Title}" FontSize="12" Foreground="#FF25BFBF" FontWeight="Bold" Width="180" Height="20" Margin="5,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock  x:Name="CinemaListYearTxT" Text="{Binding Path=Year}" FontSize="12" Foreground="#FF25BFBF" FontWeight="Bold" Width="180" Height="20" Margin="5,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <TextBlock  x:Name="CinemaListRunTimeTxT" Text="{Binding Path=imdbRating}" FontSize="12" Foreground="#FF25BFBF" FontWeight="Bold" Width="180" Height="20" Margin="5,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                </StackPanel>
+
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+        <TextBox x:Name="SearchTextBox" Text="{Binding ElementName=listbox1, Path=SelectedItem.ProductName, Mode=OneWayToSource}" Grid.Row="0" BorderThickness="5" BorderBrush="#FF25BFBF" Foreground="#FF25BFBF" FontWeight="Bold" IsUndoEnabled="False" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" FontSize="50" VerticalContentAlignment="Center"></TextBox>
+        <Button x:Name="SearchButton" Grid.Column="1" FontSize="35" Content="Search"  Margin="0" Foreground="White" Background="#FF25BFBF" Click="SearchButton_Click" />
+
+        <StackPanel  Grid.Row="1" Grid.Column="1" x:Name="StackDragDrop" Margin="5,10,5,0" AllowDrop="True" >
+
+
+            <Image x:Name="CinemaImage" Height="153"  Source="{Binding SelectedItem.Poster, ElementName=listbox1}" AllowDrop="True" Margin="0,0,10,0"/>
+
+
+            <StackPanel>
+                <TextBox x:Name="CinemaTitleTxT" Text="{Binding ElementName=listbox1, Path=SelectedItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="5,5,5,0" Foreground="#FF25BFBF" FontSize="20" IsReadOnly="True"  ></TextBox>
+                <TextBox x:Name="CinemaYearTxT" Text="{Binding ElementName=listbox1, Path=SelectedItem.Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,0" Foreground="#FF25BFBF" FontSize="20" IsReadOnly="True"  ></TextBox>
+                <TextBox x:Name="CinemaRunTimeTxT" Text="{Binding ElementName=listbox1, Path=SelectedItem.imdbRating, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,0" Foreground="#FF25BFBF" FontSize="20" IsReadOnly="True"></TextBox>
+                <TextBox x:Name="CinemaGenreTxT" Text="{Binding ElementName=listbox1, Path=SelectedItem.Genre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,0" Foreground="#FF25BFBF" FontSize="20" IsReadOnly="True"></TextBox>
+                <RichTextBox x:Name="CinemaPlotTxT" Margin="5,5,5,0" Foreground="#FF25BFBF" FontSize="20" IsReadOnly="True" Height="162" TextOptions.TextFormattingMode="Display" TextOptions.TextHintingMode="Fixed" VerticalScrollBarVisibility="Auto" >
+                    <RichTextBox.Document>
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text="{Binding ElementName=listbox1, Path=SelectedItem.Plot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox.Document>
+                </RichTextBox>
+                <StackPanel x:Name="Stackyoutubewb" Height="250" Margin="4,0,3,0" >
+                    <wpfAddBrowser:ChromiumWebBrowser x:Name="ChromiumBrowser" Height="200"></wpfAddBrowser:ChromiumWebBrowser>
+                </StackPanel>
+            </StackPanel>
+
+
+
+
+
+        </StackPanel>
+
+
+    </Grid>
+</Window>
