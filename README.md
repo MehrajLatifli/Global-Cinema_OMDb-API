@@ -3,5 +3,8 @@ Example of HttpClient, HttpResponseMessage, Dynamic value, INotifyPropertyChange
 
 
 
-https://user-images.githubusercontent.com/30021708/120199799-ac50da80-c234-11eb-8638-19b4656910c5.mp4
+
+Uploading Global_Cinema - OMDb.API_VideoReadMeI.mp4…
+
+
 
